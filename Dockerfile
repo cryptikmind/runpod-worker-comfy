@@ -42,7 +42,7 @@ RUN pip3 install runpod requests
 # ADD models/checkpoints/sd_xl_base_1.0.safetensors models/checkpoints/
 # ADD models/vae/sdxl_vae.safetensors models/vae/
 
-ADD models/checkpoints/sdXL_v10VAEFix.safetensors models/checkpoints/
+ADD models/sdXL_v10VAEFix.safetensors models/checkpoints/
 ADD models/MJBoy1-ohwx-000008.safetensors models/loras/
 ADD models/MJGirl4-ohwx-000001.safetensors models/loras/
 ADD models/control-lora-canny-rank256.safetensors models/controlnet/control-lora/control-LoRAs-rank256
