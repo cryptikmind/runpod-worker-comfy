@@ -47,6 +47,10 @@ ADD models/MJBoy1-ohwx-000008.safetensors models/loras/
 ADD models/MJGirl4-ohwx-000001.safetensors models/loras/
 ADD models/control-lora-canny-rank256.safetensors models/controlnet/control-lora/control-LoRAs-rank256
 
+# ADD custom nodes directory
+ADD models/custom_nodes/comfyui_controlnet_aux /custom_nodes/comfyui_controlnet_aux
+
+
 # Go back to the root
 WORKDIR /
 
