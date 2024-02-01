@@ -48,8 +48,12 @@ ADD models/MJGirl4-ohwx-000001.safetensors models/loras/
 ADD models/control-lora-canny-rank256.safetensors models/controlnet/control-lora/control-LoRAs-rank256
 
 # ADD custom nodes directory
-ADD models/custom_nodes/comfyui_controlnet_aux /custom_nodes/comfyui_controlnet_aux
+ADD models/custom_nodes/comfyui_controlnet_aux custom_nodes/comfyui_controlnet_aux
 
+WORKDIR /comfyui/custom_nodes/comfyui_controlnet_aux
+
+# Install Python dependencies from requirements.txt
+RUN pip3 install -r requirements.txt
 
 # Go back to the root
 WORKDIR /

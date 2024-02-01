@@ -222,7 +222,7 @@ def process_output_images(outputs, job_id):
       defaulting to "/comfyui/output" if not set.
     - It then iterates through the outputs to find the filenames of the generated images.
     - After confirming the existence of the image in the output folder, it checks if the
-      AWS S3 bucket is configured via the BUCKET_ENDPOINT_URL environment variable.
+    AWS S3 bucket is configured via the BUCKET_ENDPOINT_URL environment variable.
     - If AWS S3 is configured, it uploads the image to the bucket and returns the URL.
     - If AWS S3 is not configured, it encodes the image in base64 and returns the string.
     - If the image file does not exist in the output folder, it returns an error status
