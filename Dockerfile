@@ -45,15 +45,18 @@ RUN pip3 install runpod requests
 ADD models/sdXL_v10VAEFix.safetensors models/checkpoints/
 ADD models/MJBoy1-ohwx-000008.safetensors models/loras/
 ADD models/MJGirl4-ohwx-000001.safetensors models/loras/
-ADD models/control-lora-canny-rank256.safetensors models/controlnet/control-lora/control-LoRAs-rank256
+ADD models/control-lora-canny-rank256.safetensors models/controlnet/control-lora-canny-rank256.safetensors
 
 # ADD custom nodes directory
-ADD models/custom_nodes/comfyui_controlnet_aux custom_nodes/comfyui_controlnet_aux
-
-WORKDIR /comfyui/custom_nodes/comfyui_controlnet_aux
-
+# . Turns out this doesn't work. We're going to build the image, install the Node Manager, do install it interactively, the commit that for the final image
+#ADD models/custom_nodes/comfyui_controlnet_aux custom_nodes/comfyui_controlnet_aux
+#WORKDIR /comfyui/custom_nodes/comfyui_controlnet_aux
 # Install Python dependencies from requirements.txt
-RUN pip3 install -r requirements.txt
+#RUN pip3 install -r requirements.txt
+
+# Install ComfyUI-Manager
+WORKDIR /comfyui/custom_nodes
+RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git
 
 # Go back to the root
 WORKDIR /
@@ -64,3 +67,13 @@ RUN chmod +x /start.sh
 
 # Start the container
 CMD /start.sh
+
+# How to interactively setup Comfy
+# . You might need to edit start.sh to start comfy with --cpu and remove the trailing & and following rp_handler.py command
+#   (when I don't do this the container doesn't remain running)
+# . Start the container: sudo docker run -d -p 8188:8188 --name comfyui_container cryptikmind/runpod-worker-comfy:dev
+# . Run Comfy via Firefox, load a workflow with a missing node, Open ComfyManager > Install Missing Nodes
+# . Shut down the container and commit. This then becomes the final image that you go with.
+# . Of course you could then DIFF the files and just include those in this Docker file (so you don't need to do this interactive step) OR
+#   Actually figure out how to install all the nodes you need via git / python commands and include those directly in the Docker file above.
+#   But as it stands, since I'm not 100% sure about which nodes and model I'll need, this interactive setup is actually good because it lets me easily run workflows, update the container / image, then push the latest image to Dockerhub / Runpod
